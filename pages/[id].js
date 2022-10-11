@@ -52,7 +52,7 @@ export default function Entry (  { personData , friendData } ){
                     <a href={"mailto:" + personData.email} className="card-link text-primary"> Email {personData.name}</a>
                     <br/>
                     <h5 className="card-text text-dark">
-                        Meet {personData.name}'s Friends:
+                        Friends of {personData.name} :
                     </h5>
                     {console.log("friend data inside component")}
                     {console.log(friendData)}
