@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 
 //question for later - is "lib" naming Next.js convention or optional? 
-import { getPeopleIds, getData } from '../lib/data.js'
+import { getPeopleIds, getData, getFriendList } from '../lib/data.js'
 
 
 //create getstaticprops to return all the data for one person
@@ -12,10 +12,14 @@ import { getPeopleIds, getData } from '../lib/data.js'
 export async function getStaticProps({ params }) {
 
     const personData = await getData(params.id);
+    const friendData = await getFriendList(params.id)
+
+    console.log("friend data on id page")
+    console.log(friendData)
 
     return {
         props: {
-            personData
+            personData, friendData
         }
     };
 }
@@ -33,34 +37,38 @@ export async function getStaticPaths() {
 
 //make a compoenent that will display the persons details at the dynamic route 
 
-export default function Entry ( { personData }, { friendData }){
+export default function Entry (  { personData , friendData } ){
     return (
         <Layout>
             <article className="card col-6">
                 <div className="card-body">
-                    <h5 className="card-title text-dark">
+                    <h4 className="card-title text-dark">
                         {personData.name}
-                    </h5>
-                    <h6 className="card-subtitle mb-2 text-muted"> 
+                    </h4>
+                    <h5 className="card-subtitle mb-2 text-muted"> 
                         {personData.job}
-                    </h6>
+                    </h5>
                     <p className="card-text text-dark">{personData.name} was {personData.age} years old at the time of the Fellowship of the Ring.</p>
                     <a href={"mailto:" + personData.email} className="card-link text-primary"> Email {personData.name}</a>
-                    <h6>
-                        {personData.name}'s Friends
-                    </h6>
-                    <ul>
+                    <br/>
+                    <h5 className="card-text text-dark">
+                        Meet {personData.name}'s Friends:
+                    </h5>
+                    {console.log("friend data inside component")}
+                    {console.log(friendData)}
                         {friendData &&
-                        <li>
-                            <Link  key={id} href={`/${friendData.id}`}>
-                                <a className="list-group-item list-group-item-action"> {friendData.name} </a> 
-                            </Link>
-                        </li>
-                        }
-                    </ul>
+                            <div className="list-group">
+                           
+
+                            {friendData.map(({ friendId, friendName }) => (
+                                <Link  key={friendId} href={`/${friendId}`}>
+                                    <a className="list-group-item text-dark list-group-item-action"> {friendName} </a> 
+                                </Link>
+                            ))}
+                            </div>
+                        }        
                 </div>
             </article>
         </Layout>
     )
-
 }
