@@ -1,0 +1,17 @@
+[
+    {
+        "name":"Gandalf",
+        "id":1,
+        "friendIds":[2, 3]
+    },
+    {
+        "name":"Aragorn",
+        "id":2,
+        "friendIds":[1, 3]
+    },
+    {
+        "name":"Samwise Gamgee",
+        "id":3,
+        "friendIds":[1, 2]
+    }
+]

@@ -30,8 +30,8 @@ export default function Home({ allPeople }) {
 
       <div className="list-group">
         {allPeople.map(({ id, name}) => (
-          <Link href={`/${id}`}>
-            <a key={id} className="list-group-item list-group-item-action"> {name} </a> 
+          <Link  key={id} href={`/${id}`}>
+            <a className="list-group-item list-group-item-action"> {name} </a> 
           </Link>
         ))}
       </div>
