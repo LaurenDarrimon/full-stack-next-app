@@ -1,4 +1,6 @@
 import Layout from '../components/layout.js';
+import Link from 'next/link';
+
 
 
 //question for later - is "lib" naming Next.js convention or optional? 
@@ -31,19 +33,31 @@ export async function getStaticPaths() {
 
 //make a compoenent that will display the persons details at the dynamic route 
 
-export default function Entry ( { personData }){
+export default function Entry ( { personData }, { friendData }){
     return (
         <Layout>
             <article className="card col-6">
                 <div className="card-body">
-                    <h5 className="card-title">
+                    <h5 className="card-title text-dark">
                         {personData.name}
                     </h5>
                     <h6 className="card-subtitle mb-2 text-muted"> 
                         {personData.job}
                     </h6>
-                    <p className="card-text">{personData.name} was {personData.age} years old at the time of the Fellowship of the Ring.</p>
-                    <a href={"mailto:" + personData.email} className="card-link"> Email {personData.name}</a>
+                    <p className="card-text text-dark">{personData.name} was {personData.age} years old at the time of the Fellowship of the Ring.</p>
+                    <a href={"mailto:" + personData.email} className="card-link text-primary"> Email {personData.name}</a>
+                    <h6>
+                        {personData.name}'s Friends
+                    </h6>
+                    <ul>
+                        {friendData &&
+                        <li>
+                            <Link  key={id} href={`/${friendData.id}`}>
+                                <a className="list-group-item list-group-item-action"> {friendData.name} </a> 
+                            </Link>
+                        </li>
+                        }
+                    </ul>
                 </div>
             </article>
         </Layout>
